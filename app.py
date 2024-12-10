@@ -1,7 +1,13 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
+from tmdbv3api import TMDb, Movie
+from dotenv import load_dotenv
+import os
 from movielens_project import load_data, create_similarity_matrix, movie_rec, get_movie_details
+
+load_dotenv()
+
+tmdb = TMDb()
+tmdb.api_key = os.getenv('TMDB_API_KEY')
 
 def main():
     st.title("🎬 Movie Recommendation System")
