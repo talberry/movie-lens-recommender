@@ -1,4 +1,12 @@
 import pandas as pd
+from dotenv import load_dotenv
+import os
+from tmdbv3api import TMDb, Movie
+import re
+
+load_dotenv()
+tmdb = TMDb()
+tmdb.api_key = os.getenv('TMDB_API_KEY')
 
 def load_data():
     # Load ratings data
@@ -70,39 +78,22 @@ def get_movie_genres(movie_title, movies_df):
 def get_movie_details(movie_title, movies_df):
     """Get detailed information about a movie"""
     movie_info = movies_df[movies_df['title'] == movie_title].iloc[0]
+    movie = Movie()
+    
+    clean_title = re.sub(r'\s*\(.*?\)', '', movie_title).strip() # Remove year and parentheses from movie title
+    search_results = movie.search(clean_title)
+    if search_results:
+        correct_mov = search_results[0]
+        release_date = correct_mov.release_date
+        poster = f"https://image.tmdb.org/t/p/w500{correct_mov.poster_path}" if correct_mov.poster_path else None
+        tmdb_url = f'https://www.themoviedb.org/movie/{correct_mov.id}'
+        
+    
     return {
+        'poster': poster,
         'title': movie_info['title'],
-        'release_date': movie_info['release_date'],
+        'release_date': release_date,
         'genres': get_movie_genres(movie_title, movies_df),
-        'imdb_url': movie_info['IMDb_URL']
+        'tmdb_url': tmdb_url
     }
-
-if __name__ == "__main__":
-    # Load data
-    ratings, movies = load_data()
-    
-    # Create similarity matrix
-    similarity, matrix = create_similarity_matrix(ratings, movies)
-    
-    print("Utility Matrix:")
-    print(matrix.head())
-    
-    print("\nMovie Similarities:")
-    print(similarity.head())
-    
-    # Get recommendations for Star Wars
-    recommended_movies = movie_rec("Star Wars (1977)", similarity)
-    
-    print("\nRecommended Movies:")
-    print(recommended_movies)
-    
-    # Example of getting movie details
-    if recommended_movies is not None:
-        print("\nDetailed Recommendations:")
-        for movie in recommended_movies.index:
-            details = get_movie_details(movie, movies)
-            print(f"\nTitle: {details['title']}")
-            print(f"Release Date: {details['release_date']}")
-            print(f"Genres: {', '.join(details['genres'])}")
-            print(f"IMDb: {details['imdb_url']}")
 
