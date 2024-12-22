@@ -82,8 +82,14 @@ def get_movie_details(movie_title, movies_df):
     
     clean_title = re.sub(r'\s*\(.*?\)', '', movie_title).strip() # Remove year and parentheses from movie title
     search_results = movie.search(clean_title)
+    
+    # Get additional movie info from TMDb
     if search_results:
         correct_mov = search_results[0]
+        credits = movie.credits(correct_mov.id)
+        
+        directors = [crew['name'] for crew in credits['crew'] if crew['job'] == 'Director']
+        directors = ', '.join(directors) if directors else "Unknown"
         release_date = correct_mov.release_date
         poster = f"https://image.tmdb.org/t/p/w500{correct_mov.poster_path}" if correct_mov.poster_path else None
         tmdb_url = f'https://www.themoviedb.org/movie/{correct_mov.id}'
@@ -92,6 +98,7 @@ def get_movie_details(movie_title, movies_df):
     return {
         'poster': poster,
         'title': movie_info['title'],
+        'directors': directors,
         'release_date': release_date,
         'genres': get_movie_genres(movie_title, movies_df),
         'tmdb_url': tmdb_url
