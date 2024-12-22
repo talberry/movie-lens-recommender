@@ -3,8 +3,4 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-<<<<<<< Updated upstream
-.env
-=======
-.env
->>>>>>> Stashed changes
+secrets.toml

@@ -1,12 +1,10 @@
 import pandas as pd
-from dotenv import load_dotenv
-import os
 from tmdbv3api import TMDb, Movie
+import streamlit as st
 import re
 
-load_dotenv()
 tmdb = TMDb()
-tmdb.api_key = os.getenv('TMDB_API_KEY')
+tmdb.api_key = st.secrets["tmdb_api_key"]
 
 def load_data():
     # Load ratings data
