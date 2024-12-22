@@ -4,3 +4,10 @@ __pycache__/
 *$py.class
 
 secrets.toml
+
+# VSCode
+.vscode/
+.history/
+
+*.log
+.DS_Store
