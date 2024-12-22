@@ -39,12 +39,15 @@ streamlit run app.py
 This project uses the MovieLens 100K Dataset, which contains 100,000 movie ratings from 943 users on 1,682 movies.
 
 ## Dependencies
+```
 streamlit==1.31.0
 pandas==2.1.4
 tmdbv3api==1.9.0
 numpy==1.26.3
+```
 
 ## Project Structure
+```
 MovieLensRecommendation/
 ├── .streamlit/
 │   └── secrets.toml
@@ -54,6 +57,7 @@ MovieLensRecommendation/
 ├── movielens_project.py
 ├── app.py
 └── requirements.txt
+```
 
 ## MIT License
 
