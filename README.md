@@ -15,8 +15,8 @@ A Streamlit-based web application that provides movie recommendations using the 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/MovieLensRecommendation.git
-cd MovieLensRecommendation
+git clone https://github.com/talberry/movie-lens-recommender.git
+cd movie-lens-recommender
 ```
 
 2. Install dependencies
@@ -48,7 +48,7 @@ numpy==1.26.3
 
 ## Project Structure
 ```
-MovieLensRecommendation/
+movie-lens-recommender/
 ├── .streamlit/
 │   └── secrets.toml
 ├── ml-100k/
